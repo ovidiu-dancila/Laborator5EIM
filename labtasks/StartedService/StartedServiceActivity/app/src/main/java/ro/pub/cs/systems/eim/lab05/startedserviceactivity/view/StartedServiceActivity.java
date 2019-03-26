@@ -56,6 +56,9 @@ public class StartedServiceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         // TODO: exercise 8d - stop the service
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("ro.pub.cs.systems.eim.lab05.startedservice", "ro.pub.cs.systems.eim.lab05.startedservice.service.StartedService"));
+        stopService(intent);
 
         super.onDestroy();
     }
@@ -63,5 +66,12 @@ public class StartedServiceActivity extends AppCompatActivity {
     // TODO: exercise 9 - implement the onNewIntent callback method
     // get the message from the extra field of the intent
     // and display it in the messageTextView
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String message = intent.getStringExtra(Constants.MESSAGE);
+        if (message != null) {
+            messageTextView.setText(messageTextView.getText().toString() + "\n" + message);
+        }
+    }
 }

@@ -12,6 +12,9 @@ public class StartedServiceBroadcastReceiver extends BroadcastReceiver {
     private TextView messageTextView;
 
     // TODO: exercise 9 - default constructor
+    public StartedServiceBroadcastReceiver() {
+        this.messageTextView = null;
+    }
 
     public StartedServiceBroadcastReceiver(TextView messageTextView) {
         this.messageTextView = messageTextView;
@@ -39,5 +42,11 @@ public class StartedServiceBroadcastReceiver extends BroadcastReceiver {
 
         // TODO: exercise 9 - restart the activity through an intent
         // if the messageTextView is not available
+        if (messageTextView == null) {
+            Intent startedServiceActivityIntent = new Intent(context, StartedServiceActivity.class);
+            startedServiceActivityIntent.putExtra(Constants.MESSAGE, data);
+            startedServiceActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP );
+            context.startActivity(startedServiceActivityIntent);
+        }
     }
 }
